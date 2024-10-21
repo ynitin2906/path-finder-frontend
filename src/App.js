@@ -19,34 +19,32 @@ function App() {
       setStart([x, y]);
     } else if (!end) {
       setEnd([x, y]);
-      calculatePath(x, y); // Calculate path once end point is set
     }
   };
 
-  const calculatePath = async (endX, endY) => {
-    if (start) {
+  const calculatePath = async () => {
+    if (start && end) {
       try {
         const response = await axios.post(
           `${process.env.REACT_APP_API_URL}/find-path`,
           {
             start: { x: start[0], y: start[1] },
-            end: { x: endX, y: endY },
+            end: { x: end[0], y: end[1] },
           }
         );
 
         const pathToAnimate = response.data.path;
-        animatePath(pathToAnimate); // Animate the path
+        animatePath(pathToAnimate);
       } catch (error) {
         console.error("Error calculating path:", error);
       }
+    } else {
+      alert("Please select both a start and an end point.");
     }
   };
 
   const animatePath = (pathToAnimate) => {
-    // Clear the previous path if any
     setPath([]);
-
-    // Iterate over the path and change colors one by one
     pathToAnimate.forEach((cell, index) => {
       setTimeout(() => {
         setPath((prevPath) => [...prevPath, cell]);
@@ -84,9 +82,14 @@ function App() {
           )}
         </div>
       </div>
-      <button onClick={resetGrid} disabled={!start && !end}>
-        Reset Grid
-      </button>
+      <div className="button-container">
+        <button onClick={calculatePath} disabled={!start || !end}>
+          Calculate Path
+        </button>
+        <button onClick={resetGrid} disabled={!start && !end}>
+          Reset Grid
+        </button>
+      </div>
     </div>
   );
 }
