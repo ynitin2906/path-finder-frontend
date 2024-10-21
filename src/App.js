@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import "./App.css"; // Ensure you import the updated CSS file
+import "./App.css";
 
 const GRID_SIZE = 20;
 
@@ -13,6 +13,8 @@ function App() {
   const [start, setStart] = useState(null);
   const [end, setEnd] = useState(null);
   const [path, setPath] = useState([]);
+  const [animating, setAnimating] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleCellClick = (x, y) => {
     if (!start) {
@@ -24,6 +26,7 @@ function App() {
 
   const calculatePath = async () => {
     if (start && end) {
+      setLoading(true);
       try {
         const response = await axios.post(
           `${process.env.REACT_APP_API_URL}/find-path`,
@@ -37,6 +40,8 @@ function App() {
         animatePath(pathToAnimate);
       } catch (error) {
         console.error("Error calculating path:", error);
+      } finally {
+        setLoading(false);
       }
     } else {
       alert("Please select both a start and an end point.");
@@ -45,10 +50,14 @@ function App() {
 
   const animatePath = (pathToAnimate) => {
     setPath([]);
+    setAnimating(true);
+
     pathToAnimate.forEach((cell, index) => {
-      setTimeout(() => {
-        setPath((prevPath) => [...prevPath, cell]);
-      }, index * 20);
+      if (animating) {
+        setTimeout(() => {
+          setPath((prevPath) => [...prevPath, cell]);
+        }, index * 20);
+      }
     });
   };
 
@@ -56,6 +65,7 @@ function App() {
     setStart(null);
     setEnd(null);
     setPath([]);
+    setAnimating(false);
   };
 
   return (
@@ -83,12 +93,14 @@ function App() {
         </div>
       </div>
       <div className="button-container">
-        <button onClick={calculatePath} disabled={!start || !end}>
-          Calculate Path
-        </button>
-        <button onClick={resetGrid} disabled={!start && !end}>
-          Reset Grid
-        </button>
+        <div style={{ display: "flex", gap: "50px" }}>
+          <button onClick={calculatePath} disabled={!start || !end || loading}>
+            {loading ? "Calculating..." : "Calculate Path"}
+          </button>
+          <button onClick={resetGrid} disabled={(!start && !end) || loading}>
+            Reset Grid
+          </button>
+        </div>
       </div>
     </div>
   );
