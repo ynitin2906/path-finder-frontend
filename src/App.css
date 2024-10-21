@@ -1,0 +1,39 @@
+.grid-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.grid {
+  display: inline-grid;
+  grid-template-columns: repeat(35, 30px);
+}
+
+.node {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.node-start {
+  background-color: green;
+}
+
+.node-finish {
+  background-color: red;
+}
+
+.node-wall {
+  background-color: black;
+}
+
+.node-visited {
+  background-color: lightblue;
+}
+
+.node-shortest-path {
+  background-color: yellow;
+}
