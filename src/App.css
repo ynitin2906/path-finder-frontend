@@ -1,29 +1,52 @@
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 10px; /* Reduced padding */
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  font-size: 24px; /* Slightly smaller font size */
+}
+
 .grid-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 10px; /* Reduced margin */
 }
 
 .grid {
   display: inline-grid;
-  grid-template-columns: repeat(35, 30px);
+  grid-template-columns: repeat(20, 24px); /* Smaller cell size */
+  gap: 1px; /* Space between cells */
+  border: 2px solid #ccc; /* Border around the grid */
+  border-radius: 8px; /* Rounded corners */
+  background-color: #ffffff; /* Background for the grid */
 }
 
 .node {
-  width: 30px;
-  height: 30px;
+  width: 24px; /* Smaller width */
+  height: 24px; /* Smaller height */
   border: 1px solid #ccc;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.node:hover {
+  transform: scale(1.05); /* Scale effect on hover */
 }
 
 .node-start {
   background-color: green;
+  border: 2px solid darkgreen; /* Darker border for start */
 }
 
 .node-finish {
   background-color: red;
+  border: 2px solid darkred; /* Darker border for finish */
 }
 
 .node-wall {
@@ -36,4 +59,27 @@
 
 .node-shortest-path {
   background-color: yellow;
+  border: 2px solid orange; /* Border for path cells */
+}
+
+button {
+  display: block;
+  margin: 10px auto; /* Reduced margin */
+  padding: 8px 16px; /* Smaller padding */
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 14px; /* Smaller font size */
+}
+
+button:hover {
+  background-color: #0056b3; /* Darker button color on hover */
+}
+
+button:disabled {
+  background-color: #ccc; /* Gray out button when disabled */
+  cursor: not-allowed;
 }

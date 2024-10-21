@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import "./App.css"; // Ensure you import the updated CSS file
 
 const GRID_SIZE = 20;
 
@@ -24,14 +25,18 @@ function App() {
 
   const calculatePath = async (endX, endY) => {
     if (start) {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/find-path`,
-        {
-          start: { x: start[0], y: start[1] },
-          end: { x: endX, y: endY },
-        }
-      );
-      setPath(response.data.path);
+      try {
+        const response = await axios.post(
+          `${process.env.REACT_APP_API_URL}/find-path`,
+          {
+            start: { x: start[0], y: start[1] },
+            end: { x: endX, y: endY },
+          }
+        );
+        setPath(response.data.path);
+      } catch (error) {
+        console.error("Error calculating path:", error);
+      }
     }
   };
 
@@ -44,33 +49,26 @@ function App() {
   return (
     <div>
       <h1>DFS Path Finder</h1>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: `repeat(${GRID_SIZE}, 20px)`,
-        }}
-      >
-        {grid.map((row, rowIndex) =>
-          row.map((cell, colIndex) => (
-            <div
-              key={`${rowIndex}-${colIndex}`}
-              onClick={() => handleCellClick(rowIndex, colIndex)}
-              style={{
-                width: 20,
-                height: 20,
-                border: "1px solid black",
-                backgroundColor:
+      <div className="grid-container">
+        <div className="grid">
+          {grid.map((row, rowIndex) =>
+            row.map((cell, colIndex) => (
+              <div
+                key={`${rowIndex}-${colIndex}`}
+                onClick={() => handleCellClick(rowIndex, colIndex)}
+                className={`node ${
                   start && start[0] === rowIndex && start[1] === colIndex
-                    ? "green"
+                    ? "node-start"
                     : end && end[0] === rowIndex && end[1] === colIndex
-                    ? "red"
+                    ? "node-finish"
                     : path.some(([x, y]) => x === rowIndex && y === colIndex)
-                    ? "lightblue"
-                    : "white",
-              }}
-            />
-          ))
-        )}
+                    ? "node-shortest-path"
+                    : ""
+                }`}
+              />
+            ))
+          )}
+        </div>
       </div>
       <button onClick={resetGrid} disabled={!start && !end}>
         Reset Grid
