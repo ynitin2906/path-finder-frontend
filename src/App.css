@@ -2,51 +2,51 @@ body {
   font-family: "Arial", sans-serif;
   background-color: #f4f4f4;
   margin: 0;
-  padding: 10px; /* Reduced padding */
+  padding: 10px;
 }
 
 h1 {
   text-align: center;
   color: #333;
-  font-size: 24px; /* Slightly smaller font size */
+  font-size: 24px;
 }
 
 .grid-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 10px; /* Reduced margin */
+  margin-top: 10px;
 }
 
 .grid {
   display: inline-grid;
-  grid-template-columns: repeat(20, 24px); /* Smaller cell size */
-  gap: 1px; /* Space between cells */
-  border: 2px solid #ccc; /* Border around the grid */
-  border-radius: 8px; /* Rounded corners */
-  background-color: #ffffff; /* Background for the grid */
+  grid-template-columns: repeat(20, 24px);
+  gap: 1px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background-color: #ffffff;
 }
 
 .node {
-  width: 24px; /* Smaller width */
-  height: 24px; /* Smaller height */
+  width: 24px;
+  height: 24px;
   border: 1px solid #ccc;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .node:hover {
-  transform: scale(1.05); /* Scale effect on hover */
+  transform: scale(1.05);
 }
 
 .node-start {
   background-color: green;
-  border: 2px solid darkgreen; /* Darker border for start */
+  border: 2px solid darkgreen;
 }
 
 .node-finish {
   background-color: red;
-  border: 2px solid darkred; /* Darker border for finish */
+  border: 2px solid darkred;
 }
 
 .node-wall {
@@ -59,27 +59,48 @@ h1 {
 
 .node-shortest-path {
   background-color: yellow;
-  border: 2px solid orange; /* Border for path cells */
+  border: 2px solid orange;
 }
 
 button {
   display: block;
-  margin: 10px auto; /* Reduced margin */
-  padding: 8px 16px; /* Smaller padding */
+  margin: 10px auto;
+  padding: 8px 16px;
   background-color: #007bff;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  font-size: 14px; /* Smaller font size */
+  font-size: 14px;
 }
 
 button:hover {
-  background-color: #0056b3; /* Darker button color on hover */
+  background-color: #0056b3;
 }
 
 button:disabled {
-  background-color: #ccc; /* Gray out button when disabled */
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.button-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #4caf50;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+button:disabled {
+  background-color: #ccc;
   cursor: not-allowed;
 }
