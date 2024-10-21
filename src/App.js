@@ -33,11 +33,25 @@ function App() {
             end: { x: endX, y: endY },
           }
         );
-        setPath(response.data.path);
+
+        const pathToAnimate = response.data.path;
+        animatePath(pathToAnimate); // Animate the path
       } catch (error) {
         console.error("Error calculating path:", error);
       }
     }
+  };
+
+  const animatePath = (pathToAnimate) => {
+    // Clear the previous path if any
+    setPath([]);
+
+    // Iterate over the path and change colors one by one
+    pathToAnimate.forEach((cell, index) => {
+      setTimeout(() => {
+        setPath((prevPath) => [...prevPath, cell]);
+      }, index * 20);
+    });
   };
 
   const resetGrid = () => {
